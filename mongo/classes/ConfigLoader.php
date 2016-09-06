@@ -6,6 +6,8 @@
  * Date: 05.09.2016
  * Time: 12:53
  */
+namespace classes;
+
 class ConfigLoader {
     private $config;
 

@@ -6,9 +6,15 @@
  * Date: 06.09.2016
  * Time: 10:46
  */
-class GetCollections extends Base {
+class GetCollections extends \classes\Base {
     public static function run() {
         $db = self::getMongoDb();
-        return json_encode($db->listCollections());
+
+        $list = $db->listCollections();
+        $collArray = array();
+        foreach ($list as $collection)
+            $collArray[] = $collection->getName();
+
+        return json_encode($collArray);
     }
 }

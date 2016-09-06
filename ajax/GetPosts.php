@@ -12,9 +12,7 @@ class GetPosts extends \classes\Base{
         $cursor = $collection->find();
 
         $data = array_values(iterator_to_array($cursor));
-        array_walk($data, function (&$v, $k) {
-            unset($v["_id"]); // remove id value from array
-        });
+        $data = \classes\Helper::removeIdCol($data);
 
         return json_encode($data);
     }

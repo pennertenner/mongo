@@ -11,8 +11,7 @@ namespace classes;
 abstract class Base {
     protected final function getMongoDb() {
         // load config file
-        $path = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "mongo.ini";
-        $cfg = new \classes\ConfigLoader($path);
+        $cfg = Helper::loadConfig();
 
         // connect to mongo server
         $mClient = new \MongoClient("mongodb://".$cfg->getValue("ServerConnection", "ip").":".$cfg->getValue("ServerConnection", "port"));
@@ -24,8 +23,7 @@ abstract class Base {
 
     protected final function getPostsCollection() {
         // load config file
-        $path = realpath(dirname(__FILE__)) . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . ".." . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "mongo.ini";
-        $cfg = new \classes\ConfigLoader($path);
+        $cfg = Helper::loadConfig();
 
         $db = self::getMongoDb();
         return $db->selectCollection($cfg->getValue("Collections", "collection")[1]);

@@ -17,7 +17,7 @@ $mClient = new MongoClient("mongodb://".$cfg->getValue("ServerConnection", "ip")
 // connect to mongo db
 $db = new MongoDB($mClient, $cfg->getValue("ServerConnection", "db"));
 
-$list = $db->listCollections();
+
 echo "Anzahl Collections: " . count($list) . "<br>";
 foreach ($list as $collection) {
     echo "Collection: " . $collection ."<br>";

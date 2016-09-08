@@ -5,6 +5,7 @@
  * Date: 06.09.2016
  * Time: 10:43
  */
+header('Access-Control-Allow-Origin: *');
 include_once 'autoloader.php';
 
 

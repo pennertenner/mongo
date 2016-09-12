@@ -25,4 +25,9 @@ else {
  * GetPostsByTag
  * GetPostByContent
  * CreatePost
+ *
+ *
+ *
+ *
+ * Installation Linux und Windows + Einrichtung PHP (mongo lib) + PHP Backend
  */

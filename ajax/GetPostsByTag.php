@@ -15,9 +15,26 @@ class GetPostsByTag extends \classes\Base {
         $cfg = \classes\Helper::loadConfig();
 
         $collection = self::getPostsCollection();
-        $cursor = $collection->find(array($cfg->getValue("posts_Attributes", "tag") => new \MongoRegex('/'.$tag.'/i'))); // find tag case insensitiv
+        $cursor = $collection->aggregate(array(
+            array(
+                '$match' => array(
+                    $cfg->getValue("posts_Attributes", "tag") => new \MongoRegex('/'.$tag.'/i')
+                )
+            ),
+            array(
+                '$lookup' => array(
+                    "from" => "user",
+                    "localField" => "uid",
+                    "foreignField" => "name",
+                    "as" => "user"
+                )
+            ),
+            array(
+                '$limit' => 100
+            )
+        ));
 
-        $data = array_values(iterator_to_array($cursor));
+        $data = $cursor["result"];
         $data = \classes\Helper::removeIdCol($data);
 
         return json_encode($data);

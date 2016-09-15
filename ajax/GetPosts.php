@@ -9,9 +9,21 @@
 class GetPosts extends \classes\Base{
     public static function run() {
         $collection = self::getPostsCollection();
-        $cursor = $collection->find();
+        $cursor = $collection->aggregate(array(
+            array(
+                '$lookup' => array(
+                    "from" => "user",
+                    "localField" => "uid",
+                    "foreignField" => "name",
+                    "as" => "user"
+                )
+            ),
+            array(
+                '$limit' => 100
+            )
+        ));
 
-        $data = array_values(iterator_to_array($cursor));
+        $data = $cursor["result"];
         $data = \classes\Helper::removeIdCol($data);
 
         return json_encode($data);

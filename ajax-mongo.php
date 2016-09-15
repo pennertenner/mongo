@@ -19,6 +19,8 @@ else {
     die("-1");
 }
 
+
+
 /**
  * GetCollections (demo)
  * GetPosts

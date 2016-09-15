@@ -31,6 +31,11 @@ class GetPostsByTag extends \classes\Base {
             ),
             array(
                 '$limit' => 100
+            ),
+            array(
+                '$sort' => array(
+                    "date" => -1
+                )
             )
         ));
 

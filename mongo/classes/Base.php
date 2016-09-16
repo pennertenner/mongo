@@ -29,6 +29,14 @@ abstract class Base {
         return $db->selectCollection($cfg->getValue("Collections", "collection")[1]);
     }
 
+    protected final function getUsersCollection() {
+        // load config gile
+        $cfg = Helper::loadConfig();
+
+        $db = self::getMongoDb();
+        return $db->selectCollection($cfg->getValue("Collections", "collection")[0]);
+    }
+
     /**
      * @return JSON-String
      */

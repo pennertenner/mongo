@@ -18,11 +18,6 @@ class GetPostsByContent extends \classes\Base
         $collection = self::getPostsCollection();
         $cursor = $collection->aggregate(array(
             array(
-                '$match' => array(
-                    $cfg->getValue("posts_Attributes", "content") => new \MongoRegex('/'.$content.'/i')
-                )
-            ),
-            array(
                 '$lookup' => array(
                     "from" => "user",
                     "localField" => "uid",
@@ -31,12 +26,17 @@ class GetPostsByContent extends \classes\Base
                 )
             ),
             array(
-                '$limit' => 100
+                '$match' => array(
+                    $cfg->getValue("posts_Attributes", "content") => new \MongoRegex('/'.$content.'/i')
+                )
             ),
             array(
                 '$sort' => array(
                     "date" => -1
                 )
+            ),
+            array(
+                '$limit' => 100
             )
         ));
 

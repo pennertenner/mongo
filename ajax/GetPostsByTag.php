@@ -17,11 +17,6 @@ class GetPostsByTag extends \classes\Base {
         $collection = self::getPostsCollection();
         $cursor = $collection->aggregate(array(
             array(
-                '$match' => array(
-                    $cfg->getValue("posts_Attributes", "tag") => new \MongoRegex('/'.$tag.'/i')
-                )
-            ),
-            array(
                 '$lookup' => array(
                     "from" => "user",
                     "localField" => "uid",
@@ -30,12 +25,17 @@ class GetPostsByTag extends \classes\Base {
                 )
             ),
             array(
-                '$limit' => 100
+                '$match' => array(
+                    $cfg->getValue("posts_Attributes", "tag") => new \MongoRegex('/'.$tag.'/i')
+                )
             ),
             array(
                 '$sort' => array(
                     "date" => -1
                 )
+            ),
+            array(
+                '$limit' => 100
             )
         ));
 
